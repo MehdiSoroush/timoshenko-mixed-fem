@@ -1,11 +1,8 @@
 # Source audit and reconstruction notes (Phases 1–3)
 
-**Primary source:** User-supplied `FEM_Project.pdf` (2017 coursework, 64 PDF pages).
-The archival 2017 course report is **intentionally excluded** from this code-focused
-repository at the author's request. Its source year is recorded without
-publishing the original PDF.
+**Historical reference:** A 2017 graduate-level FEM coursework report (64 PDF pages). The archival report is not included in this repository. PDF page references below identify locations in that source.
 
-## What we have reconstructed directly from the report
+## Reconstructed components of the 2017 study
 
 | Feature | Source location (PDF page, 1-indexed) | Status |
 | --- | --- | --- |
@@ -52,29 +49,22 @@ publishing the original PDF.
 - **Source study, numeric only:** Mesh refinement of the fixed-pinned beam
   subject to uniform `q=4800 N/m` on the left half and `Q=3000 N` at midspan.
 
-These validation cases verify the solver in special circumstances, but
-**do not independently validate** the source's original mixed dynamic model
-or its own fixed-pinned dynamic comparisons.
+These closed-form benchmarks verify the static implementation in special cases. Additional frequency and transient comparisons with an independently formulated physical FEM model are reported in [Phase 3 Verification](PHASE3_VERIFICATION.md). The historical Abaqus datasets are unavailable, and their exact reproduction has not been established.
 
 ## Unresolved source-to-figure discrepancy
 
 The original plot (PDF p. 42, printed figure 4-1) appears to have a peak
 near 0.019 m, while the parameters and static matrix/BCs as transcribed
 from PDF pp. 38-40 give a peak near 0.00966 m at 101 nodes.
-**Do not say that the source plot has been reproduced** until the difference
-is explained. Candidate causes include a parameter used at run time that
+The historical plot cannot currently be regarded as numerically reproduced. Candidate causes include a parameter used at run time that
 was different from the documented values, plotting data not preserved,
 force application, or a transcription/description error.
 
-## Next phases before a public release
+## Verification status and outstanding work
 
-1. [Implemented Phase 2] Recreate the dynamic `Me` matrix and original Crank-Nicolson / three-level integration; see [dynamic audit](DYNAMIC_AUDIT.md).
-2. [Phase 3 verified in selected cases] Independent modal time checks, exact continuum first bending frequency, and independent physical FE transient comparisons now exist; original Abaqus numerical comparison remains outstanding.
-3. [Phase 3 complete] Check the historical `h/(4I)` vs outer-fiber `h/(2I)` stress location and generate stress plots, retaining both definitions.
-4. Reconcile original static figure with reproduced numerical results.
-5. Add appropriate Abaqus reference data **only if the underlying files
-   can be supplied or the model is independently recreated**.
-6. Add CI and an explicitly chosen open-source license prior to publishing.
+The mixed dynamic mass matrix and historical time-integration recurrence have been implemented. The static and selected dynamic responses have been compared with analytical or independent FEM references. Stress recovery has been audited with separate definitions of outer-fiber and historical quarter-thickness normal stress.
+
+Outstanding tasks include reconciliation of the historical static-deflection figure, a like-for-like Abaqus comparison using recovered or newly generated reference data, and broader transient verification across loads, time steps, and vibration modes. Exact reproduction of the historical numerical results has not been established.
 
 ## Provenance
 

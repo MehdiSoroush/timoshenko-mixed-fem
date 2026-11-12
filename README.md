@@ -1,12 +1,12 @@
 # Mixed Finite Element Analysis of Timoshenko Beams
 
-> **Status: Verified Python reconstruction (release candidate v0.4.0).** Historical Abaqus data and a discrepant 2017 static plot remain unavailable/unresolved; this repository does **not** claim to reproduce those results exactly.
+> **Status: Published Python reconstruction (v0.4.0).** Historical Abaqus data and a discrepant 2017 static plot remain unavailable/unresolved; this repository does **not** claim to reproduce those results exactly.
 
 A reproducible Python finite element implementation built on a **2017 graduate mixed-FEM study**, with modern numerical reconstruction and independent verification in **November 2026**.
 
 The original project analyzed a Timoshenko beam under static and dynamic loading. This repository focuses on *implementations and reproducible calculations*, not a scanned historical report.
 
-**Start with the new English [technical report](docs/TECHNICAL_REPORT.md)** (also available as [PDF](docs/Technical_Report.pdf)). It presents the mechanics, numerical method, validation data, figures, interpretation, and limitations in one place. For implementation details, see [formulation](docs/MATHEMATICAL_FORMULATION.md), [source audit](docs/SOURCE_AUDIT.md), [dynamic audit](docs/DYNAMIC_AUDIT.md), and [independent verification](docs/PHASE3_VERIFICATION.md). The private archival coursework file is **not** distributed.
+**Start with the new English [technical report](docs/TECHNICAL_REPORT.md)** (also available as [PDF](docs/Technical_Report.pdf)). It presents the mechanics, numerical method, validation data, figures, interpretation, and limitations in one place. For implementation details, see [formulation](docs/MATHEMATICAL_FORMULATION.md), [source audit](docs/SOURCE_AUDIT.md), [dynamic audit](docs/DYNAMIC_AUDIT.md), and [independent verification](docs/PHASE3_VERIFICATION.md). The archival coursework report is not included.
 
 ## Implemented numerical methods
 
@@ -103,20 +103,8 @@ docs/                      # English report, mathematical notes, numerical audit
 
 The calculated peak linear-elastic normal stresses may exceed the yield strength of some steels. The historic source does not identify a tested grade or its yield strength; the code does not model plasticity or failure. The plots must therefore be interpreted as **linear-elastic predictions**, not evidence of safe service behavior. See the [Phase 3 verification notes](docs/PHASE3_VERIFICATION.md) and [mathematical formulation](docs/MATHEMATICAL_FORMULATION.md).
 
-## Public-release checklist
+## Project status and license
 
-- [x] Standalone scientific Python code
-- [x] Automated code and analytical/modal tests
-- [x] Source-vs-new work provenance
-- [x] Standalone English technical report provided; archival course material excluded
-- [x] Identify and quantify the printed static `−a` inconsistency; independently validate the `+a` interpretation
-- [ ] Reconcile the still-discrepant original static plot (~19 mm vs ~9.56 mm computed midpoint)
-- [x] Validate the low-frequency mixed dynamics against an independent displacement–rotation physical FE model, and the first bending frequency against a Timoshenko continuum result
-- [ ] Obtain like-for-like Abaqus results or reconcile historical Abaqus comparisons
-- [x] Audit and implement stress recovery; distinguish the historical quarter-thickness normal-stress measure from outer-fiber bending stress
-- [x] Add GitHub Actions continuous-integration test workflow
-- [x] MIT open-source license and GitHub citation metadata added
+This public repository provides a Python reconstruction of a 2017 graduate-level computational mechanics study. Independent analytical and numerical benchmarks support the implementation, while the historical Abaqus datasets and a discrepancy in the original static-deflection figure remain unresolved. Technical limitations and outstanding validation tasks are recorded in the [source audit](docs/SOURCE_AUDIT.md) and [independent verification notes](docs/PHASE3_VERIFICATION.md).
 
-**License:** MIT (2026). Check the copyright attribution and license choice before you publish; you can change this while the repository is still local.
-
-**Release policy:** This can be published as a documented, independently checked scientific-software reconstruction. Do not describe it as exact historical Abaqus replication until source data become available.
+The software is distributed under the [MIT License](LICENSE). The 2026 reconstruction and associated verification work should be distinguished from the original 2017 study when citing results.

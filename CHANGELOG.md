@@ -1,10 +1,15 @@
 # Changes
 
+## Documentation maintenance — November 2026
+
+- Updated public-facing documentation and removed obsolete release-preparation material.
+- Clarified verification scope and project history without modifying numerical code or results.
+
 ## 0.4.0 — November 2026 (English documentation and publication audit)
 
 - Added a complete English technical report (Markdown and PDF), with mathematical methods, verification tables and figures, and provenance.
 - Standardized public-facing descriptions of the 2017 coursework and November 2026 Python reconstruction.
-- Added CITATION.cff, MIT license, and reproducible release instructions.
+- Added CITATION.cff, MIT license, and reproducibility documentation.
 - Re-ran all 30 numerical tests; no numerical solver changes in this release.
 
 
@@ -19,8 +24,7 @@
 - Added stress recovery with clearly differentiated outer-fiber, historical,
   section-average, maximum rectangular, and effective Timoshenko definitions.
 - Audited the contradictory printed static `-a` and dynamic `+a` coefficients.
-- Expanded the source transparency, mathematical formulation, and public
-  portfolio documentation; archival 2017 coursework PDF stays excluded.
+- Expanded source transparency, mathematical formulation, and numerical verification documentation; archival 2017 coursework PDF remains excluded.
 - Expanded automated numerical tests from 22 to 30.
 
 ## 0.2.0 — November 2026 (Phase 2)

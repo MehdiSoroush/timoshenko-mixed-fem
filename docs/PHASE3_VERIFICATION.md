@@ -166,9 +166,5 @@ Supporting CSV files are in `results/data/`.
 3. Verify additional dynamic benchmark cases and source three-level numerical
    damping across a range of steps and modes. Compare physical shear/bending
    definitions with intended plotting locations.
-4. Choose an explicit license before a public GitHub release.
 
-A repository claiming that the original 2017 Abaqus results have been
-"reproduced exactly" would still be misleading. A **verified Python
-reconstruction of a 2017 research/coursework model**, with transparent
-modifications and independent reference calculations, is supported.
+The available evidence supports describing this repository as a **verified Python reconstruction of a 2017 computational mechanics study**, with explicitly documented modifications and independent reference calculations. It does not establish exact reproduction of the historical Abaqus results.
