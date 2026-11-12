@@ -6,7 +6,7 @@ A reproducible Python finite element implementation built on a **2017 graduate m
 
 The original project analyzed a Timoshenko beam under static and dynamic loading. This repository focuses on *implementations and reproducible calculations*, not a scanned historical report.
 
-**Start with the new English [technical report](docs/TECHNICAL_REPORT.md)** (also available as [PDF](docs/Technical_Report.pdf)). It presents the mechanics, numerical method, validation data, figures, interpretation, and limitations in one place. For implementation details, see [formulation](docs/MATHEMATICAL_FORMULATION.md), [source audit](docs/SOURCE_AUDIT.md), [dynamic audit](docs/DYNAMIC_AUDIT.md), and [independent verification](docs/PHASE3_VERIFICATION.md). The archival coursework report is not included.
+**Start with the [English technical report](docs/TECHNICAL_REPORT.md)** (also available as [PDF](docs/Technical_Report.pdf)). It presents the mechanics, numerical method, validation data, figures, interpretation, and limitations in one place. For implementation details, see [formulation](docs/MATHEMATICAL_FORMULATION.md), [source audit](docs/SOURCE_AUDIT.md), [dynamic audit](docs/DYNAMIC_AUDIT.md), and [independent verification](docs/PHASE3_VERIFICATION.md). The archival coursework report is not included.
 
 ## Implemented numerical methods
 
