@@ -35,8 +35,8 @@
    displacement/rotation Timoshenko element. **Important correction:** the
    original printed *static* last diagonal is `-a`, while the dynamic
    listing uses `+a`. The printed `-a` form gives nonconvergent deflections; the
-   implementation therefore uses the independently validated `+a`. The separate standard model is used
-   for verification only (see `PHASE3_VERIFICATION.md`).
+   implementation therefore uses the independently validated `+a`. The separate
+   standard model is used for verification only (see `PHASE3_VERIFICATION.md`).
 
 ## Verification actually performed
 
