@@ -45,7 +45,7 @@ For initial displacement `u0` and velocity `v0`, the historical Crank-Nicolson s
 
 `(M + dt² K / 4) u1 = (M - dt² K / 4) u0 + dt M v0 + dt² (f0 + f1) / 4`
 
-The source program uses zero initial displacement and velocity. Our implementation also accepts consistent nonzero initial states to enable modal verification.
+The source program uses zero initial displacement and velocity. The Python implementation also accepts consistent nonzero initial states for modal verification.
 
 ### Subsequent steps
 
@@ -59,11 +59,11 @@ B = 2*M - alpha*dt²*K
 C = -M - beta*dt²*K
 ```
 
-we apply
+The resulting recurrence is
 
 `A u[j+1] = B u[j] + C u[j-1] + dt²*(beta*f[j-1] + alpha*f[j] + lambda*f[j+1])`.
 
-For each time step we solve a sparse system with a reused LU factorization; we do not calculate an explicit matrix inverse.
+At each time step, the sparse linear system is solved using a reused LU factorization; no explicit matrix inverse is formed.
 
 ## Load-profile caveats
 

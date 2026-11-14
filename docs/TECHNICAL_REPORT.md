@@ -215,7 +215,7 @@ A clean installation requires Python **3.11 or newer**:
 
 ```bash
 python -m venv .venv
-# Activate the environment using your operating system's command.
+# Activate the virtual environment for the operating system.
 python -m pip install -e '.[dev]'
 python -m pytest -q
 python examples/reproduce_original_static.py

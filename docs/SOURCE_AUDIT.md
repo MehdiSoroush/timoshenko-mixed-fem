@@ -34,9 +34,9 @@
    silently replacing the author's mixed formulation with a standard
    displacement/rotation Timoshenko element. **Important correction:** the
    original printed *static* last diagonal is `-a`, while the dynamic
-   listing uses `+a`. Using `-a` gives nonconvergent deflections, so we use
-   the independently validated `+a`. The separate standard model is used
-   for verification only (see `PHASE3_VERIFICATION.md`).
+   listing uses `+a`. The printed `-a` form gives nonconvergent deflections; the
+   implementation therefore uses the independently validated `+a`. The separate
+   standard model is used for verification only (see `PHASE3_VERIFICATION.md`).
 
 ## Verification actually performed
 

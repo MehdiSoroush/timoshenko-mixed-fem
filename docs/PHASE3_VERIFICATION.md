@@ -12,8 +12,8 @@ there (PDF page 38). These expressions are not identical. Literal use of the
 printed `-a` static entry yields non-convergent results: for 55 nodes the
 midspan deflection is about **−2.862 mm**, worsening to **−19.072 mm** at 101
 nodes. The consistent `+a` matrix converges to about **+9.562 mm**, and agrees
-with an entirely separate physical [deflection, rotation] FEM solver. This
-repo uses `+a`; it must be called a **documented correction/interpretation**,
+with an entirely separate physical [deflection, rotation] FEM solver. The
+Python implementation uses `+a`. This is a **documented correction/interpretation**,
 not a literal copy of the source static line.
 
 See `examples/audit_historical_static.py` and the generated
@@ -24,7 +24,7 @@ is used) and uses `inv(Kt)*Ft`, both addressed in the reconstruction.
 **Still unresolved:** The static deflection plot in the original report (PDF
 page 42) peaks near 19 mm, whereas consistent source parameters and two
 independent current implementations yield roughly 9.66 mm **maximum** deflection
-(9.56 mm at the midpoint). We cannot establish why the plotted values differ
+(9.56 mm at the midpoint). The discrepancy cannot be resolved
 without the original runnable files, numerical Abaqus output, or additional
 parameters. The `-a` typo does not satisfactorily explain this figure.
 
@@ -102,8 +102,8 @@ The original stress-recovery listing (PDF pages 36, 40) computes
 bending stress at a position `|z|=h/4` for linear stress variation, not to the
 surface stress at `|z|=h/2`. It is **one-half** the outer-fiber magnitude.
 The source does not unambiguously say which through-thickness location was
-intended; therefore we preserve both conventions instead of declaring the
-historic result definitely wrong.
+intended; therefore both conventions are retained rather than declaring the
+historic result definitively incorrect.
 
 `stress.py` explicitly provides:
 

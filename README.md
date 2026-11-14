@@ -1,12 +1,14 @@
 # Mixed Finite Element Analysis of Timoshenko Beams
 
+**Mehdi Soroush** · Research study: 2017 · Python reconstruction: 2026
+
 > **Status: Published Python reconstruction (v0.4.0).** Historical Abaqus data and a discrepant 2017 static plot remain unavailable/unresolved; this repository does **not** claim to reproduce those results exactly.
 
 A reproducible Python finite element implementation built on a **2017 graduate mixed-FEM study**, with modern numerical reconstruction and independent verification in **November 2026**.
 
 The original project analyzed a Timoshenko beam under static and dynamic loading. This repository focuses on *implementations and reproducible calculations*, not a scanned historical report.
 
-**Start with the [English technical report](docs/TECHNICAL_REPORT.md)** (also available as [PDF](docs/Technical_Report.pdf)). It presents the mechanics, numerical method, validation data, figures, interpretation, and limitations in one place. For implementation details, see [formulation](docs/MATHEMATICAL_FORMULATION.md), [source audit](docs/SOURCE_AUDIT.md), [dynamic audit](docs/DYNAMIC_AUDIT.md), and [independent verification](docs/PHASE3_VERIFICATION.md). The archival coursework report is not included.
+The [English technical report](docs/TECHNICAL_REPORT.md), also available as a [PDF](docs/Technical_Report.pdf), presents the mechanics, numerical method, validation data, figures, interpretation, and limitations. For implementation details, see [formulation](docs/MATHEMATICAL_FORMULATION.md), [source audit](docs/SOURCE_AUDIT.md), [dynamic audit](docs/DYNAMIC_AUDIT.md), and [independent verification](docs/PHASE3_VERIFICATION.md). The archival coursework report is not included.
 
 ## Implemented numerical methods
 
@@ -51,7 +53,7 @@ python examples/recover_stresses.py
 python examples/audit_historical_static.py
 ```
 
-On Linux/macOS, create the environment with `python3 -m venv .venv` and activate it with `source .venv/bin/activate`. On Windows choose an installed Python version (3.11 or newer). Existing environments need **not** be modified.
+On Linux/macOS, the corresponding environment commands are `python3 -m venv .venv` and `source .venv/bin/activate`. Python 3.11 or newer is required; the project-local virtual environment isolates its dependencies.
 
 ## Numerical verification at a glance
 
