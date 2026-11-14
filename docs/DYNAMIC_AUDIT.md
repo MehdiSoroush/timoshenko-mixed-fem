@@ -59,7 +59,7 @@ B = 2*M - alpha*dt²*K
 C = -M - beta*dt²*K
 ```
 
-the resulting recurrence is
+The resulting recurrence is
 
 `A u[j+1] = B u[j] + C u[j-1] + dt²*(beta*f[j-1] + alpha*f[j] + lambda*f[j+1])`.
 
