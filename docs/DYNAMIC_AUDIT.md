@@ -81,7 +81,7 @@ An additional `unit-triangle` profile with normalized peak 1.0 provides a separa
 - The translational mass submatrix sums to `rho*A*L` as expected for a uniform field.
 - All three historical forcing functions produce finite results and preserve displacement/moment boundary constraints.
 - The source three-level equation and the Newmark equations satisfy small numerical residuals at each step (these are **algebraic checks**, not evidence of physical validation).
-- An *independently computed FE generalized eigenvector* gives an exact scalar modal reference `q(t) = phi*cos(omega*t)` for **the discretized problem**. A newly added Newmark average-acceleration integrator demonstrates second-order temporal convergence against this solution.
+- An *independently computed FE generalized eigenvector* gives an exact scalar modal reference `q(t) = phi*cos(omega*t)` for **the discretized problem**. Newmark average-acceleration integration demonstrates second-order temporal convergence against this semidiscrete solution.
 - **Significant algorithmic damping** is present in the original three-level scheme for the first mode at the selected timesteps. It may strongly influence the original dynamic graphs. Newmark average acceleration is included as a separate 2026 temporal comparison.
 - The first simply-supported natural frequency approaches the expected order of magnitude from the Euler-Bernoulli slender-beam expression. That expression is only an approximate reference for the Timoshenko beam.
 
