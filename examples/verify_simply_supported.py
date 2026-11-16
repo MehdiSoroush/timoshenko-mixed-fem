@@ -1,6 +1,6 @@
 """Independent analytical validation under a uniform distributed load.
 
-This is NOT the original left-half load configuration; it is a benchmark.
+The simply supported loading configurations provide analytical verification benchmarks.
 """
 from pathlib import Path
 import csv

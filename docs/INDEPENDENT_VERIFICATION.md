@@ -1,10 +1,8 @@
-# Phase 3: independent continuum/reference FEM and stress verification
+# Independent finite element, continuum, and stress verification
 
-**Original project:** 2017 (Tir 1396); **reconstruction and new checks:** November 2026.
-The archival 2017 coursework report is intentionally **not distributed** here.
-These are newly computed checks, not archived Abaqus files, recovered numerical results, or experimental data.
+The mixed Timoshenko beam study originated in **2017** (Tir 1396). This document presents the independent static, modal, transient, and stress-recovery comparisons performed for the **November 2026 Python reconstruction**. The numerical benchmarks were computed from the documented implementation and its analytical or separately formulated reference models.
 
-## Source audit: an important static-matrix inconsistency
+## Static stiffness-matrix consistency
 
 The 2017 manuscript writes the dynamic local matrix with `+a` in the last
 stiffness diagonal (PDF page 33), but the *static MATLAB listing* writes `-a`
@@ -21,16 +19,11 @@ See `examples/audit_historical_static.py` and the generated
 contains a capitalization collision (`B` defines the section width before `b`
 is used) and uses `inv(Kt)*Ft`, both addressed in the reconstruction.
 
-**Still unresolved:** The static deflection plot in the original report (PDF
-page 42) peaks near 19 mm, whereas consistent source parameters and two
-independent current implementations yield roughly 9.66 mm **maximum** deflection
-(9.56 mm at the midpoint). The discrepancy cannot be resolved
-without the original runnable files, numerical Abaqus output, or additional
-parameters. The `-a` typo does not satisfactorily explain this figure.
+The archived static-deflection plot (PDF page 42) peaks near 19 mm. By contrast, the documented model parameters and two independently assembled formulations give approximately **9.66 mm maximum** deflection (9.56 mm at the midpoint). The available archival information does not explain this difference, and the printed `-a` coefficient does not account for the plotted peak.
 
 ## Independent conventional FE model
 
-A completely separate solver was added in `src/timoshenko_mixed/reference.py`:
+The independently assembled numerical reference in `src/timoshenko_mixed/reference.py` uses:
 
 - Nodal DOFs `[w_i, phi_i, w_j, phi_j]`, rather than the original mixed
   `[w_i, M_i, w_j, M_j]`.
@@ -42,9 +35,7 @@ A completely separate solver was added in `src/timoshenko_mixed/reference.py`:
 - Physical fixed–pinned conditions `w(0)=phi(0)=w(L)=0`, and simply-supported
   conditions `w(0)=w(L)=0`.
 
-These are mathematically distinct spatial discretizations. Numerical agreement
-is a meaningful check of the original mixed formulation rather than a
-self-comparison of two time-stepping routines applied to the same matrices.
+The independent spatial discretizations enable comparison of the mixed formulation with a physical displacement–rotation beam model without reusing its assembled matrices.
 
 ### Static convergence, original fixed–pinned loading
 
@@ -59,8 +50,7 @@ geometry. Midspan deflections (all newly computed):
 | 65 | 9.562227 | 9.555796 | 0.0673% |
 | 129 | 9.561999 | 9.560391 | **0.0168%** |
 
-These results support static convergence of both methods; they do not
-establish agreement with the absent original Abaqus model.
+Both formulations exhibit static convergence under the specified loads and supports. The comparison does not include archival Abaqus numerical data.
 
 ### Exact simply supported continuum frequency
 
@@ -91,19 +81,15 @@ conditions, and a timestep of `dt=0.001 s`:
 
 The independent reference has its own stiffness, mass, force assembly, and
 boundary elimination; only the shared scalar temporal load profile is reused.
-The agreement is not proof that every high-frequency mode or all original
-three-level algorithm outputs are free of issues. The source three-level method
-was independently assessed for numerical damping in `DYNAMIC_AUDIT.md`.
+The reported agreement characterizes the specified short-time response; it does not encompass every higher mode or the full behavior of the weighted three-level recurrence. Numerical damping is assessed in [dynamic verification](DYNAMIC_AUDIT.md).
 
-## Stress recovery: explicit conventions and an important factor of two
+## Stress recovery and through-thickness conventions
 
 The original stress-recovery listing (PDF pages 36, 40) computes
 `M_mid*h/(4*I)` after multiplication by E. This value corresponds to the
 bending stress at a position `|z|=h/4` for linear stress variation, not to the
 surface stress at `|z|=h/2`. It is **one-half** the outer-fiber magnitude.
-The source does not unambiguously say which through-thickness location was
-intended; therefore both conventions are retained rather than declaring the
-historic result definitively incorrect.
+The archival source does not identify the intended through-thickness evaluation point unambiguously. Both measures are therefore retained with explicit definitions.
 
 `stress.py` explicitly provides:
 
@@ -134,11 +120,9 @@ For the baseline fixed–pinned static case, at 101 nodes:
 A representative 21-node, `dt=.001 s`, first-0.2-s constant-load Newmark
 solution reaches about **467.993 MPa** peak *linear-elastic* outer-fiber bending
 stress. These calculations presume linear elastic material behavior; the
-report does not establish a material grade or yield stress. Therefore these
-numbers must not be interpreted as evidence that the beam would remain elastic
-under that loading in practice.
+report does not establish a material grade or yield stress. These results characterize the theoretical linear-elastic stress distribution. A strength or safety assessment would require a specified material grade and a constitutive model appropriate to the predicted stress range.
 
-## Reproduce
+## Reproduction commands
 
 ```powershell
 python -m pip install -e ".[dev]"
@@ -157,14 +141,8 @@ Generated figures include:
 
 Supporting CSV files are in `results/data/`.
 
-## Remaining work before describing this as a fully reproduced historical study
+## Verification scope
 
-1. Reconcile the original 2017 static graph (apparently ~19 mm) with the
-   actual documented input parameters and now cross-verified ~9.56 mm midpoint.
-2. If historical Abaqus input/output data can be recovered, compare like-for-like
-   geometry, formulation, mass, loading, supports, and time sampling.
-3. Verify additional dynamic benchmark cases and source three-level numerical
-   damping across a range of steps and modes. Compare physical shear/bending
-   definitions with intended plotting locations.
+The independent computations establish agreement for the specified static, first-frequency, and selected transient benchmark configurations. The archived Abaqus input/output datasets and full model definitions are unavailable, so a like-for-like reconstruction of those comparisons is not established. The archived static-deflection figure likewise differs from the response calculated using its documented parameters.
 
-The available evidence supports describing this repository as a **verified Python reconstruction of a 2017 computational mechanics study**, with explicitly documented modifications and independent reference calculations. It does not establish exact reproduction of the historical Abaqus results.
+The reported tests do not encompass every higher vibration mode, temporal loading configuration, or nonlinear material-strength criterion. These boundaries describe the scope of the current numerical verification.

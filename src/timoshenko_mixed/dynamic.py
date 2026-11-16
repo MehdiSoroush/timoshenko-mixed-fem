@@ -1,7 +1,7 @@
-"""Source-derived *dynamic* mixed beam finite elements, with an audited time scheme.
+"""Dynamic mixed finite elements and the weighted time-integration scheme.
 
 Historical source: 2017 coursework report, PDF pp. 32--37 (1-indexed).
-This module is a new Python reconstruction, not recovered MATLAB code.
+The Python implementation reconstructs the documented 2017 formulation.
 
 The original equations are M u_ddot + K u = f(t), with mixed unknowns
 [w_0, M_0, w_1, M_1, ...]. Both M and K are non-symmetric in this
@@ -10,8 +10,7 @@ with gamma=3/2 and lambda=4/5, with a Crank--Nicolson startup (equivalent
 to the initial displacement step of trapezoidal/Newmark average acceleration).
 The scheme has algorithmic high-frequency damping; it is not energy preserving.
 
-NOTE: The historical report includes no raw Abaqus numerical data and does not
-provide a quantified dynamic accuracy assessment. See docs/DYNAMIC_AUDIT.md.
+Independent numerical comparisons are documented in docs/DYNAMIC_AUDIT.md.
 """
 from __future__ import annotations
 
@@ -92,7 +91,7 @@ def load_multiplier(t: float, case: DynamicLoad, duration: float = 1.0) -> float
 
     `sine` uses sin(t) with t in seconds, as written in the original source.
     `source-ramp` peaks at 0.5 for duration=1, reflecting the reported code;
-    `unit-triangle` is an explicitly NEW, peak-1 alternative. The source's
+    `unit-triangle` is a distinct, unit-height comparison profile. The source's
     integer-floor discretization is approximated by continuous piecewise time.
     """
     if duration <= 0:
@@ -148,7 +147,7 @@ def solve_dynamic(
     arrays use alternating [w,M] ordering and must satisfy constraints.
 
     The source's constant, sin(t), and half-height triangle are all available.
-    A fully normalized triangle is an explicitly *new* comparison case.
+    A unit-height triangular loading profile is available for comparison.
     Constraints are imposed by free-DOF elimination rather than row stamping.
     """
     b = beam if beam is not None else Beam()

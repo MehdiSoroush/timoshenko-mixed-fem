@@ -1,7 +1,7 @@
 """Generate auditable time-history plots and CSV from the 2017 beam problem.
 
 Run from repository root: python examples/reproduce_dynamic_cases.py
-This generates NEW numerical results, not digitizations of the original report.
+Computed figures and datasets are produced by the Python implementation.
 """
 from __future__ import annotations
 

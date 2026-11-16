@@ -1,16 +1,16 @@
 """Static mixed (deflection, bending moment) 1D finite-element solver.
 
-Corrected reconstruction of the source mixed *static stiffness matrix*.
+The mixed static stiffness matrix follows the documented source formulation.
 The printed static MATLAB listing (PDF page 38) has `-a` in its bottom-right
 diagonal, whereas the dynamic listing (PDF page 33) has `+a`. The literal
 `-a` fails mesh convergence; `+a` matches an independent physical FEM solver.
-This is a 2026 documented correction, NOT a recovered copy of original code.
+The independently verified coefficient is used in the 2026 implementation.
 
 Global degrees of freedom: [w_0, M_0, w_1, M_1, ..., w_(n-1), M_(n-1)].
 Displacements and moments are mixed primary unknowns.
 
 Loads and supports are expressed explicitly. No commercial FEM solver is
-used. See docs/SOURCE_AUDIT.md for limitations and pending validation.
+used. Source correspondence is described in docs/SOURCE_AUDIT.md.
 """
 from __future__ import annotations
 

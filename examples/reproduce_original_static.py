@@ -1,6 +1,6 @@
 """Run the static case as specified by the original coursework parameters.
 
-The plots are new computations, NOT imported figures from the PDF.
+The plotted results are computed using the reconstructed Python model.
 """
 from pathlib import Path
 import csv

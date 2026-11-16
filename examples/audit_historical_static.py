@@ -1,4 +1,4 @@
-"""Audit the literal -a in 2017 printed static matrix against corrected +a.
+"""Compare the archived stiffness-matrix sign with the verified coefficient.
 
 This deliberately demonstrates why the printed '-a' variant cannot be used
 as a convergent physical solver. Neither line is a recovered runnable source.

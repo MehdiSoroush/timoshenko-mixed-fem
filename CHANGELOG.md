@@ -1,9 +1,9 @@
-# Changes
+# Changelog
 
-## Documentation maintenance — November 2026
+## Unreleased — editorial documentation revision
 
-- Updated public-facing documentation and removed obsolete release-preparation material.
-- Clarified verification scope and project history without modifying numerical code or results.
+- Standardized academic authorship and provenance throughout the research documentation.
+- Consolidated verification descriptions and removed development-stage narration; numerical algorithms and datasets were not changed.
 
 ## 0.4.0 — November 2026 (English documentation and publication audit)
 
@@ -14,7 +14,7 @@
 
 
 
-## 0.3.0 — November 2026 (Phase 3)
+## 0.3.0 — November 2026 (Independent verification)
 
 - Added a physically independent, selectively integrated displacement–rotation
   Timoshenko finite element static and dynamic reference solver.
@@ -27,11 +27,11 @@
 - Expanded source transparency, mathematical formulation, and numerical verification documentation; archival 2017 coursework PDF remains excluded.
 - Expanded automated numerical tests from 22 to 30.
 
-## 0.2.0 — November 2026 (Phase 2)
+## 0.2.0 — November 2026 (Dynamic implementation)
 
 - Source-derived mixed mass matrix and historical three-level time integrator.
 - Newmark comparison; dynamic load profiles; modal numerical checks.
 
-## 0.1.0 — November 2026 (Phase 1)
+## 0.1.0 — November 2026 (Static implementation)
 
 - Reconstructed static mixed FEM and analytical beam benchmarks.

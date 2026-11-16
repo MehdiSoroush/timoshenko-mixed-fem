@@ -1,6 +1,6 @@
 """Independent conventional [w, phi] FEM and continuum frequency validation.
 
-NEW 2026 validation, not recovered Abaqus data or a reproduced 2017 figure.
+Independent numerical verification with a displacement–rotation finite element reference.
 Run: python examples/validate_independent_reference.py
 """
 from pathlib import Path

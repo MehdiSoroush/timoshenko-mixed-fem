@@ -1,4 +1,4 @@
-"""Physically labeled bending/shear stress recovery with original-source audit.
+"""Bending and shear stress recovery with explicitly defined evaluation conventions.
 
 Signed stress values follow the mixed nodal moment convention.  The outer
 fiber normal stress is M*h/(2*I).  Original source h/(4*I) underestimates

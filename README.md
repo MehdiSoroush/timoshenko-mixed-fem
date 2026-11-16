@@ -2,21 +2,21 @@
 
 **Mehdi Soroush** · Research study: 2017 · Python reconstruction: 2026
 
-> **Status: Published Python reconstruction (v0.4.0).** Historical Abaqus data and a discrepant 2017 static plot remain unavailable/unresolved; this repository does **not** claim to reproduce those results exactly.
 
-A reproducible Python finite element implementation built on a **2017 graduate mixed-FEM study**, with modern numerical reconstruction and independent verification in **November 2026**.
 
-The original project analyzed a Timoshenko beam under static and dynamic loading. This repository focuses on *implementations and reproducible calculations*, not a scanned historical report.
+This repository presents a reproducible mixed finite element implementation for static and transient Timoshenko beams. The mathematical formulation originated in a graduate computational mechanics study in **2017**; the executable Python reconstruction, independent numerical reference models, and verification studies were developed in **November 2026**.
 
-The [English technical report](docs/TECHNICAL_REPORT.md), also available as a [PDF](docs/Technical_Report.pdf), presents the mechanics, numerical method, validation data, figures, interpretation, and limitations. For implementation details, see [formulation](docs/MATHEMATICAL_FORMULATION.md), [source audit](docs/SOURCE_AUDIT.md), [dynamic audit](docs/DYNAMIC_AUDIT.md), and [independent verification](docs/PHASE3_VERIFICATION.md). The archival coursework report is not included.
+The implementation combines a displacement–moment mixed formulation with a separately assembled displacement–rotation finite element model, analytical benchmarks, and reproducible static and dynamic calculations.
+
+The [English technical report](docs/TECHNICAL_REPORT.md), also available as a [PDF](docs/Technical_Report.pdf), presents the mechanics, numerical method, validation data, figures, interpretation, and limitations. Additional documentation covers the [mathematical formulation](docs/MATHEMATICAL_FORMULATION.md), [historical model correspondence](docs/SOURCE_AUDIT.md), [dynamic formulation](docs/DYNAMIC_AUDIT.md), and [independent numerical verification](docs/INDEPENDENT_VERIFICATION.md).
 
 ## Implemented numerical methods
 
 - **Static mixed formulation:** displacement `w` and bending moment `M` as alternating nodal DOFs; non-symmetric source-derived element matrix, consistent load assembly, sparse solve.
 - **Dynamic mixed formulation:** source-derived non-symmetric 4×4 element mass matrix and assembled second-order system `M q_ddot + K q = f(t)`.
-- **Original time scheme:** Crank-Nicolson/trapezoidal startup and weighted-residual three-level recurrence with `gamma=1.5`, `lambda=0.8` (algorithmic damping).
-- **New comparison:** Newmark average-acceleration time integration, explicitly **not** claimed as the 2017 method.
-- **Loading:** a point force at the beam midpoint, and three historical distributed load shapes (`constant`, `sin(t)`, `source-ramp`) active only during the first second, plus an explicitly **new** unit-height triangular pulse option.
+- **Weighted three-level integration:** Crank-Nicolson/trapezoidal startup and weighted-residual three-level recurrence with `gamma=1.5`, `lambda=0.8` (algorithmic damping).
+- **Additional temporal reference:** Newmark average-acceleration integration for comparison with the source-derived recurrence.
+- **Loading:** a point force at the beam midpoint, and three historical distributed load shapes (`constant`, `sin(t)`, `source-ramp`) active only during the first second, plus a separate unit-height triangular comparison profile.
 - **Verification:** independent static closed-form benchmarks, mesh convergence, source-matrix tests, generalized FE eigenanalysis, exact semidiscrete modal time solution, and automated tests.
 - **Independent verification:** a separate conventional displacement–rotation FEM with its own stiffness and physical mass matrices; Timoshenko continuum dispersion benchmark; independent dynamic response comparison; explicitly labeled stress recovery and source-code inconsistency audit.
 
@@ -33,7 +33,7 @@ The [English technical report](docs/TECHNICAL_REPORT.md), also available as a [P
 | Concentrated force | `Q=3000 N` at midspan, throughout dynamic study |
 | Mixed fixed-pinned constraints | `w(0)=w(L)=M(L)=0` |
 
-The original MATLAB source used inconsistent variable naming for the section width and an element stiffness coefficient. This Python implementation separates these values; see the source audit.
+The implementation assigns distinct identifiers to the rectangular-section width and the element coefficient denoted by the same symbol in the archived MATLAB listing.
 
 ## Installation and reproducibility
 
@@ -55,11 +55,11 @@ python examples/audit_historical_static.py
 
 On Linux/macOS, the corresponding environment commands are `python3 -m venv .venv` and `source .venv/bin/activate`. Python 3.11 or newer is required; the project-local virtual environment isolates its dependencies.
 
-## Numerical verification at a glance
+## Numerical verification
 
 | Claim | Level of evidence |
 | --- | --- |
-| Mixed static element stiffness | Uses physically consistent `+a` term appearing in the source dynamic matrix; original printed *static* listing has a contradictory `−a`; see Phase 3 audit |
+| Mixed static element stiffness | Uses the `+a` coefficient present in the dynamic listing, supported by mesh convergence and an independent FE reference |
 | Static beam validation | Closed-form simply-supported uniform/point-load comparisons |
 | Mixed dynamic element mass | Reproduced from original matrix specification |
 | Dynamic time solver | Source recurrence reproduced and algebraically tested |
@@ -68,12 +68,12 @@ On Linux/macOS, the corresponding environment commands are `python3 -m venv .ven
 | Independent physical FE validation | Separate [w, rotation] elements: 0.0168% static midspan difference at 129 nodes; dynamic RMS 0.699% of reference peak over 0.2 s at 41 nodes |
 | Stress-recovery audit | Explicit outer-fiber, quarter-thickness, section-average, maximum rectangular and effective Timoshenko shear definitions |
 | Historical Abaqus comparisons | **Not independently reproduced**; underlying Abaqus datasets absent |
-| Historical static deflection figure | **Still discrepant** with documented inputs |
-| Continuum-level dynamic validation | **Incomplete**; future work |
+| Historical static deflection figure | Archived plot differs from calculations using the documented model inputs |
+| Dynamic verification scope | First bending frequency checked against the Timoshenko continuum; selected short-time transient compared with independent FEM |
 
-**Source correction note:** The historic static MATLAB listing prints `−a` where the dynamic listing has `+a`. The literal `−a` produces non-convergent solutions; this code uses the verified `+a`. This is a documented correction, **not an exact transcription** of the printed static listing.
+**Stiffness-matrix convention.** The archived static MATLAB listing contains `−a` in the final stiffness diagonal, whereas the dynamic listing contains `+a`. The former is nonconvergent under the documented refinement study. The Python implementation uses the independently verified `+a` coefficient.
 
-**Numerical note:** The original three-level integration scheme exhibits pronounced algorithmic damping at practical step sizes. The new Newmark comparison helps isolate this numerical effect but is not proof that the entire historical physical model is correct. See [detailed audit](docs/DYNAMIC_AUDIT.md).
+**Time-integration response.** The weighted three-level recurrence exhibits algorithmic damping in the reported numerical tests. The separate Newmark implementation provides a temporal comparison; see the [dynamic verification](docs/DYNAMIC_AUDIT.md).
 
 ## Main results
 
@@ -101,12 +101,12 @@ tests/                     # Numerical and regression tests
 docs/                      # English report, mathematical notes, numerical audits
 ```
 
-## Interpretation and responsible reuse
+## Linear-elastic interpretation
 
-The calculated peak linear-elastic normal stresses may exceed the yield strength of some steels. The historic source does not identify a tested grade or its yield strength; the code does not model plasticity or failure. The plots must therefore be interpreted as **linear-elastic predictions**, not evidence of safe service behavior. See the [Phase 3 verification notes](docs/PHASE3_VERIFICATION.md) and [mathematical formulation](docs/MATHEMATICAL_FORMULATION.md).
+Stress recovery is based on small-deformation, linear-elastic Timoshenko beam theory. The archived model specifies elastic properties without identifying a particular steel grade or yield strength. Plasticity, material failure, and structural strength assessment are outside the scope of the formulation. Evaluation conventions are presented in [independent verification](docs/INDEPENDENT_VERIFICATION.md) and the [mathematical formulation](docs/MATHEMATICAL_FORMULATION.md).
 
-## Project status and license
+## Research provenance and license
 
-This public repository provides a Python reconstruction of a 2017 graduate-level computational mechanics study. Independent analytical and numerical benchmarks support the implementation, while the historical Abaqus datasets and a discrepancy in the original static-deflection figure remain unresolved. Technical limitations and outstanding validation tasks are recorded in the [source audit](docs/SOURCE_AUDIT.md) and [independent verification notes](docs/PHASE3_VERIFICATION.md).
+The mixed finite element study originated in **2017**; its documented Python reconstruction and independent verification work date to **2026**. The archived static-deflection plot differs from the response computed using its stated parameters, and the original Abaqus numerical datasets are unavailable. The [historical model correspondence](docs/SOURCE_AUDIT.md) and [independent verification](docs/INDEPENDENT_VERIFICATION.md) describe these comparisons.
 
-The software is distributed under the [MIT License](LICENSE). The 2026 reconstruction and associated verification work should be distinguished from the original 2017 study when citing results.
+The software is distributed under the [MIT License](LICENSE); see [CITATION.cff](CITATION.cff). The 2026 computational results are distinct from archived Abaqus output or experimental measurements.
