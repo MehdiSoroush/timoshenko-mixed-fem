@@ -1,10 +1,10 @@
-# Phase 2: Dynamic mixed FEM reconstruction and verification
+# Dynamic mixed finite element formulation and verification
 
 **Original project:** 2017 (Tir 1396, Iranian calendar).  
 **Current implementation:** Python reconstruction, November 2026.  
 **Provenance:** Archival 2017 coursework report remains private; it is **not distributed in this repository**.
 
-## What the report actually specifies
+## Archival formulation correspondence
 
 The 2017 report's *PDF pages* (1-indexed) contain:
 
@@ -15,10 +15,10 @@ The 2017 report's *PDF pages* (1-indexed) contain:
 | 32-33 | Material quantities, element stiffness and mixed mass matrices | Implemented directly |
 | 34 | Boundary and loading assembly | Implemented, with more robust DOF elimination |
 | 35 | MATLAB Crank-Nicolson startup, three-point recurrence | Implemented directly in algebraic form |
-| 36-37 | Postprocessing formulas and plotting | Deflection and moments in Phase 2; physically labeled element stress checks now implemented in Phase 3 |
+| 36-37 | Postprocessing formulas and plotting | Deflection, moment, and explicitly defined stress recovery |
 | 45-63 | Historical time convergence, numerical deflections, moment plots, Abaqus comparisons | Figures reviewed; **not numerically reproduced/validated** |
 
-## Source-derived equation
+## Governing mixed system
 
 The mixed semidiscrete unknowns alternate transverse displacement and bending moment:
 
@@ -65,7 +65,7 @@ The resulting recurrence is
 
 At each time step, the sparse linear system is solved using a reused LU factorization; no explicit matrix inverse is formed.
 
-## Load-profile caveats
+## Distributed-load histories
 
 The central `Q=3000 N` point force is held on for the full simulation. The distributed load of `P0=4800 N/m` over the **left half** is active only during the original `L_D=1 s` interval:
 
@@ -73,21 +73,21 @@ The central `Q=3000 N` point force is held on for the full simulation. The distr
 2. `sine`: `P(t)/P0 = sin(t)` while active, using the original report's **1 rad/s** time dependence rather than an inferred frequency.
 3. `source-ramp`: linearly grows and decays with an actual peak **0.5**, not 1.0. The historical discrete formula uses `floor(1/dt)` and slightly changes the profile for arbitrary step sizes. This reconstruction uses its continuous-time counterpart with exact peak 0.5 at the half-second mark when `duration=1`.
 
-A *new*, explicitly labeled `unit-triangle` profile peaks at 1.0 and is available only for demonstration. Do not conflate it with the 2017 coursework code.
+An additional `unit-triangle` profile with normalized peak 1.0 provides a separate loading comparison.
 
-## Verification results and what they do **not** establish
+## Numerical verification
 
 - The element mass coefficients have an exact-code unit test against the printed source.
 - The translational mass submatrix sums to `rho*A*L` as expected for a uniform field.
 - All three historical forcing functions produce finite results and preserve displacement/moment boundary constraints.
 - The source three-level equation and the Newmark equations satisfy small numerical residuals at each step (these are **algebraic checks**, not evidence of physical validation).
 - An *independently computed FE generalized eigenvector* gives an exact scalar modal reference `q(t) = phi*cos(omega*t)` for **the discretized problem**. A newly added Newmark average-acceleration integrator demonstrates second-order temporal convergence against this solution.
-- **Significant algorithmic damping** is present in the original three-level scheme for the first mode at the selected timesteps. It may strongly influence the original dynamic graphs. The new Newmark integrator is a comparison, **not** a replacement claimed to be present in the historical work.
+- **Significant algorithmic damping** is present in the original three-level scheme for the first mode at the selected timesteps. It may strongly influence the original dynamic graphs. Newmark average acceleration is included as a separate 2026 temporal comparison.
 - The first simply-supported natural frequency approaches the expected order of magnitude from the Euler-Bernoulli slender-beam expression. That expression is only an approximate reference for the Timoshenko beam.
 
-**Updated after Phase 3:** The independent physical [w, rotation] FE transient and exact continuum first bending frequency are now verified in selected cases; physically labeled dynamic stress recovery is implemented. Important remaining caveats: no original Abaqus data files; original dynamic plots not quantitatively digitized; additional physical loading/time benchmarks and original three-level damping studies are warranted; original static figure discrepancy remains unresolved. See [Phase 3 verification](PHASE3_VERIFICATION.md).
+Complementary continuum-frequency, independently assembled FE, and stress-recovery comparisons are reported in [independent numerical verification](INDEPENDENT_VERIFICATION.md). Archival Abaqus numerical datasets and complete historical time histories are unavailable.
 
-## Running
+## Reproduction
 
 ```bash
 python examples/reproduce_dynamic_cases.py
@@ -95,4 +95,4 @@ python examples/verify_free_vibration.py
 python -m pytest -q
 ```
 
-Generated figures and CSV summaries are **new results of this reconstruction**, not original experimental data or recovered graphs.
+All figures and CSV summaries are generated using the documented 2026 Python implementation.
