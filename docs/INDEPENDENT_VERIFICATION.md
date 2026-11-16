@@ -81,9 +81,7 @@ conditions, and a timestep of `dt=0.001 s`:
 
 The independent reference has its own stiffness, mass, force assembly, and
 boundary elimination; only the shared scalar temporal load profile is reused.
-The agreement is not proof that every high-frequency mode or all original
-three-level algorithm outputs are free of issues. The source three-level method
-was independently assessed for numerical damping in `DYNAMIC_AUDIT.md`.
+The reported agreement characterizes the specified short-time response; it does not encompass every higher mode or the full behavior of the weighted three-level recurrence. Numerical damping is assessed in [dynamic verification](DYNAMIC_AUDIT.md).
 
 ## Stress recovery and through-thickness conventions
 
