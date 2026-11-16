@@ -69,7 +69,7 @@ On Linux/macOS, the corresponding environment commands are `python3 -m venv .ven
 | Stress-recovery audit | Explicit outer-fiber, quarter-thickness, section-average, maximum rectangular and effective Timoshenko shear definitions |
 | Historical Abaqus comparisons | **Not independently reproduced**; underlying Abaqus datasets absent |
 | Historical static deflection figure | Archived plot differs from calculations using the documented model inputs |
-| Continuum-level dynamic verification | First-frequency and selected short-time responses verified; additional modes and loading histories are outside the reported cases |
+| Dynamic verification scope | First bending frequency checked against the Timoshenko continuum; selected short-time transient compared with independent FEM |
 
 **Stiffness-matrix convention.** The archived static MATLAB listing contains `−a` in the final stiffness diagonal, whereas the dynamic listing contains `+a`. The former is nonconvergent under the documented refinement study. The Python implementation uses the independently verified `+a` coefficient.
 
