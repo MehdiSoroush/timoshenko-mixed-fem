@@ -2,7 +2,7 @@
 
 This English description accompanies a **2026 Python reconstruction** of a
 **2017 Timoshenko-beam mixed FEM graduate course project**. The archival 2017 source document is not distributed. Source-specific uncertainties are documented in
-`SOURCE_AUDIT.md` and `PHASE3_VERIFICATION.md`.
+`SOURCE_AUDIT.md` and `INDEPENDENT_VERIFICATION.md`.
 
 ## Beam model and variables
 
@@ -43,14 +43,13 @@ Ke = 1/le * [[ 0,  1,    0, -1],
 This mixed local matrix is nonsymmetric. The 2017 *static* printed listing
 shows `-a` in the last position; the 2017 *dynamic* listing has `+a`. The code
 uses the physically convergent **corrected `+a`** and independently verifies it.
-The printed `-a` fails numerical convergence and must **not** be silently
-presented as the implemented source matrix.
+The printed `-a` variant fails the mesh-convergence analysis and differs from the implemented stiffness coefficient.
 
 The distributed transverse loading is assembled by exact integration of
 linear shape functions over the loaded portions of elements. The point load
 is assigned by nodal interpolation when necessary.
 
-**Original support conditions:** a clamped left and pinned right end,
+**Fixed–pinned support conditions:** a clamped left and pinned right end,
 `w(0)=0`, `phi(0)=0`, `w(L)=0`, `M_mixed(L)=0`. In the mixed weak formulation,
 `phi(0)=0` is a natural boundary condition and no explicit rotation DOF exists.
 The constrained mixed DOFs are therefore `w(0)`, `w(L)`, and `M(L)`.
@@ -72,8 +71,7 @@ The semidiscrete mixed system is `Mglobal * u_ddot + Kglobal * u = f(t)`.
 Both assembled mixed matrices are generally nonsymmetric. The original
 weighted-residual three-level recurrence and its Crank–Nicolson startup
 are documented in `DYNAMIC_AUDIT.md`. An additional Newmark average-
-acceleration integrator is marked as **new 2026 verification work**, not
-part of the original coursework.
+acceleration integrator provides a separate 2026 integration benchmark.
 
 ## Independent physical displacement–rotation FEM
 
@@ -131,8 +129,7 @@ moment definition `EI*phi'` depending on face orientation.
 - Historical effective shear measure: `V/(ks*A)`.
 
 Because shear correction converts a nonuniform 3D cross-sectional field into
-an equivalent beam energy, the historical effective shear measure must **not**
-be described as the actual maximum transverse stress.
+an equivalent beam energy, the energy-equivalent Timoshenko shear measure differs from the local maximum transverse shear stress.
 
 ## Limitations
 
