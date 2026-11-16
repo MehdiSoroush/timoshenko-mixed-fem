@@ -1,7 +1,6 @@
 """Independent displacement--rotation Timoshenko beam reference solver.
 
-This is NEW 2026 verification work, deliberately unlike the source-derived
-mixed [w, M] element.  Two-node [w, phi] elements use exact bending
+The independent [w, phi] formulation differs from the source-derived mixed [w, M] element.  Two-node [w, phi] elements use exact bending
 integration and *one-point* shear integration to avoid shear locking.
 
 The consistent physical mass includes transverse inertia rho*A and rotary
