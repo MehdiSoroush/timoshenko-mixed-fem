@@ -5,7 +5,7 @@ integration and *one-point* shear integration to avoid shear locking.
 
 The consistent physical mass includes transverse inertia rho*A and rotary
 inertia rho*I.  The historical mixed dynamic matrix uses a different set of
-variables and must not be assumed equivalent without numerical comparison.
+variables and is evaluated through the reported numerical comparisons.
 """
 from __future__ import annotations
 from dataclasses import dataclass
