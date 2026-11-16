@@ -112,7 +112,7 @@ def test_source_three_level_damps_free_modal_oscillation():
     n=solve_dynamic(9, boundary='pinned-pinned', dt=.001, t_end=.04,
                     distributed_intensity=0, point_force=0, initial_dofs=x0,
                     integrator='newmark-average')
-    # Document original weighted-residual scheme's substantial algorithmic damping.
+    # Characterize numerical damping of the weighted-residual recurrence.
     assert abs(s.midpoint_deflection()[-1]) < .75*abs(n.midpoint_deflection()[-1])
 
 
