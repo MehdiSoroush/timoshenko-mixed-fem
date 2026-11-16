@@ -1,10 +1,10 @@
-"""Beam stress recovery with transparent physical and historical conventions.
+"""Beam stress recovery with explicit section and through-thickness conventions.
 
-NEW verification work (2026), not the original MATLAB source. The source
-uses h/(4I) times the midpoint moment for sigma_11, while the full outer-
+The archived expression uses h/(4I) times the midpoint moment for sigma_11,
+whereas the full outer-
 fibre bending stress has magnitude h/(2I) times the midpoint moment.
 
-Two distinct shear conventions are exposed: section-average V/A, peak
+Three shear measures are provided: section-average V/A, peak
 rectangular-section shear 3V/(2A), and the source's effective G*gamma=V/(ks A).
 """
 from __future__ import annotations
